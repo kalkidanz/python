@@ -38,10 +38,13 @@ vacuum_position = vacuum_body.pos
 def move_vacuum():
     global vacuum_position
     # Move the vacuum forward
-    vacuum_body.pos += direction * speed
-    vacuum_head.pos += direction * speed
-    for wheel in wheels:
-        wheel.pos += direction * speed
+    new_pos = vacuum_body.pos + direction * speed
+     # Check boundaries to keep the vacuum within the block
+    if -7.5 <= new_pos.x <= 7.5 and -7.5 <= new_pos.z <= 7.5:
+        vacuum_body.pos = new_pos
+        vacuum_head.pos += direction * speed
+        for wheel in wheels:
+           wheel.pos += direction * speed
     vacuum_position = vacuum_body.pos
 
 # Cleaning function
